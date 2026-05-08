@@ -2,7 +2,7 @@
   "name": "guilherme-portfolio",
   "private": true,
   "version": "1.0.0",
-  "homepage": "https://SEU_USUARIO.github.io/meu_site/",
+  "homepage": "https://GuiAlmeida03.github.io/meu_site/",
   "type": "module",
   "scripts": {
     "dev": "vite",
