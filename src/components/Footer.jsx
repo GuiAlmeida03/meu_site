@@ -4,19 +4,19 @@ const socials = [
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    href: 'https://linkedin.com/in/',
+    href: 'https://www.linkedin.com/in/guilherme-almeida-a7a845324',
     color: 'hover:text-blue-400 hover:border-blue-400/40 hover:bg-blue-400/8',
   },
   {
     icon: Github,
     label: 'GitHub',
-    href: 'https://github.com/',
+    href: 'https://github.com/GuiAlmeida03',
     color: 'hover:text-purple-400 hover:border-purple-400/40 hover:bg-purple-400/8',
   },
   {
     icon: Mail,
     label: 'E-mail',
-    href: 'mailto:guilherme@email.com',
+    href: 'mailto:guibson0309@gmail.com',
     color: 'hover:text-cyan-400 hover:border-cyan-400/40 hover:bg-cyan-400/8',
   },
 ]
