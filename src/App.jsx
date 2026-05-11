@@ -7,8 +7,15 @@ import About from './components/About'
 import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Certifications from './components/Certifications'
+import CurrentlyBuilding from './components/CurrentlyBuilding'
 import Footer from './components/Footer'
 import { useScrollReveal } from './hooks/useScrollReveal'
+
+const Sep = ({ color = 'purple' }) => (
+  <div className="max-w-6xl mx-auto px-6">
+    <div className={`h-px bg-gradient-to-r from-transparent via-${color}-500/20 to-transparent`} />
+  </div>
+)
 
 export default function App() {
   useScrollReveal()
@@ -16,50 +23,24 @@ export default function App() {
   return (
     <div className="scanline bg-void min-h-screen">
       <Navbar />
-
       <main>
         <Hero />
-
-        {/* Stats logo abaixo do Hero para impacto imediato */}
         <Stats />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent" />
-        </div>
-
+        <Sep color="yellow" />
         <Awards />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-purple-600/20 to-transparent" />
-        </div>
-
+        <Sep color="purple" />
         <Timeline />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-600/20 to-transparent" />
-        </div>
-
+        <Sep color="blue" />
         <About />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-blue-600/20 to-transparent" />
-        </div>
-
+        <Sep color="blue" />
         <Projects />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
-        </div>
-
+        <Sep color="cyan" />
         <Skills />
-
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="h-px bg-gradient-to-r from-transparent via-red-500/15 to-transparent" />
-        </div>
-
+        <Sep color="red" />
         <Certifications />
+        <Sep color="purple" />
+        <CurrentlyBuilding />
       </main>
-
       <Footer />
     </div>
   )
