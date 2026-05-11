@@ -150,3 +150,44 @@
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Light mode ── */
+html.light {
+  --color-void:   #f0f4ff;
+  --color-void-2: #e8eeff;
+  --color-void-3: #dde5ff;
+}
+
+html.light body {
+  background-color: #f0f4ff;
+  color: #1e1b4b;
+}
+
+html.light .bg-void   { background-color: #f0f4ff; }
+html.light .bg-void-2 { background-color: #e8eeff; }
+html.light .bg-void-3 { background-color: #dde5ff; }
+
+html.light .text-slate-200 { color: #1e1b4b; }
+html.light .text-slate-300 { color: #312e81; }
+html.light .text-slate-400 { color: #4338ca; }
+html.light .text-slate-500 { color: #6366f1; }
+html.light .text-slate-600 { color: #818cf8; }
+html.light .text-white     { color: #1e1b4b; }
+
+html.light .border-white\/5  { border-color: rgba(99,102,241,0.15); }
+html.light .border-white\/8  { border-color: rgba(99,102,241,0.2); }
+html.light .border-white\/10 { border-color: rgba(99,102,241,0.2); }
+html.light .bg-white\/3  { background-color: rgba(99,102,241,0.06); }
+html.light .bg-white\/4  { background-color: rgba(99,102,241,0.08); }
+html.light .bg-white\/5  { background-color: rgba(99,102,241,0.1); }
+
+html.light nav { background-color: rgba(240,244,255,0.85) !important; }
+
+html.light .bg-grid-pattern {
+  background-image:
+    linear-gradient(rgba(99,102,241,0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.1) 1px, transparent 1px);
+}
+
+html.light ::-webkit-scrollbar-track { background: #f0f4ff; }
+html.light ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); }

@@ -8,7 +8,9 @@ import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Certifications from './components/Certifications'
 import CurrentlyBuilding from './components/CurrentlyBuilding'
+import GitHubStats from './components/GitHubStats'
 import Footer from './components/Footer'
+import CustomCursor from './components/CustomCursor'
 import { useScrollReveal } from './hooks/useScrollReveal'
 
 const Sep = ({ color = 'purple' }) => (
@@ -22,6 +24,7 @@ export default function App() {
 
   return (
     <div className="scanline bg-void min-h-screen">
+      <CustomCursor />
       <Navbar />
       <main>
         <Hero />
@@ -36,6 +39,8 @@ export default function App() {
         <Projects />
         <Sep color="cyan" />
         <Skills />
+        <Sep color="purple" />
+        <GitHubStats />
         <Sep color="red" />
         <Certifications />
         <Sep color="purple" />

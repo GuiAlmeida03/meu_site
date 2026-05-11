@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import { Menu, X, Cpu, Globe } from 'lucide-react'
+import { Menu, X, Cpu, Globe, Sun, Moon } from 'lucide-react'
 import { useLang } from '../context/LanguageContext'
+import { useTheme } from '../context/ThemeContext'
 import { t } from '../i18n/translations'
 
 export default function Navbar() {
-  const { lang, toggle } = useLang()
+  const { lang, toggle: toggleLang } = useLang()
+  const { theme, toggle: toggleTheme } = useTheme()
   const tr = t[lang].nav
 
   const navLinks = [
@@ -42,6 +44,8 @@ export default function Navbar() {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const btnClass = 'flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-600/25 bg-purple-600/8 text-purple-300 hover:text-white hover:border-purple-500/50 hover:bg-purple-600/15 transition-all text-xs font-mono font-medium'
+
   return (
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -75,13 +79,22 @@ export default function Navbar() {
             ))}
           </ul>
 
+          {/* Controls */}
           <div className="flex items-center gap-2">
-            {/* Language toggle */}
+            {/* Theme toggle */}
             <button
-              onClick={toggle}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-600/25 bg-purple-600/8 text-purple-300 hover:text-white hover:border-purple-500/50 hover:bg-purple-600/15 transition-all text-xs font-mono font-medium"
-              title="Toggle language"
+              onClick={toggleTheme}
+              className={btnClass}
+              title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
             >
+              {theme === 'dark'
+                ? <Sun size={13} className="text-yellow-400" />
+                : <Moon size={13} className="text-purple-400" />
+              }
+            </button>
+
+            {/* Language toggle */}
+            <button onClick={toggleLang} className={btnClass} title="Toggle language">
               <Globe size={13} />
               {lang === 'pt' ? 'EN' : 'PT'}
             </button>
@@ -105,7 +118,7 @@ export default function Navbar() {
         <div className={`absolute top-0 right-0 h-full w-72 bg-void-2 border-l border-purple-600/20 flex flex-col pt-24 px-6 transition-transform duration-300 ${
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 mb-8">
             {navLinks.map(link => (
               <li key={link.href}>
                 <button
@@ -119,6 +132,15 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          {/* Mobile controls */}
+          <div className="flex gap-2">
+            <button onClick={toggleTheme} className={`${btnClass} flex-1 justify-center`}>
+              {theme === 'dark' ? <><Sun size={13} className="text-yellow-400" /> Claro</> : <><Moon size={13} /> Escuro</>}
+            </button>
+            <button onClick={toggleLang} className={`${btnClass} flex-1 justify-center`}>
+              <Globe size={13} />{lang === 'pt' ? 'EN' : 'PT'}
+            </button>
+          </div>
         </div>
       </div>
     </>
