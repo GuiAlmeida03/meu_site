@@ -1,20 +1,25 @@
 import { useState, useEffect } from 'react'
-import { Menu, X, Cpu } from 'lucide-react'
-
-const navLinks = [
-  { label: 'Início',        href: '#hero' },
-  { label: 'Conquistas',    href: '#awards' },
-  { label: 'Trajetória',    href: '#timeline' },
-  { label: 'Projetos',      href: '#projects' },
-  { label: 'Competências',  href: '#skills' },
-  { label: 'Certificações', href: '#certifications' },
-  { label: 'Contato',       href: '#contact' },
-]
+import { Menu, X, Cpu, Globe } from 'lucide-react'
+import { useLang } from '../context/LanguageContext'
+import { t } from '../i18n/translations'
 
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false)
+  const { lang, toggle } = useLang()
+  const tr = t[lang].nav
+
+  const navLinks = [
+    { label: tr.inicio,        href: '#hero' },
+    { label: tr.conquistas,    href: '#awards' },
+    { label: tr.trajetoria,    href: '#timeline' },
+    { label: tr.projetos,      href: '#projects' },
+    { label: tr.competencias,  href: '#skills' },
+    { label: tr.certificacoes, href: '#certifications' },
+    { label: tr.contato,       href: '#contact' },
+  ]
+
+  const [scrolled, setScrolled]     = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [active, setActive]       = useState('#hero')
+  const [active, setActive]         = useState('#hero')
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40)
@@ -25,21 +30,16 @@ export default function Navbar() {
   useEffect(() => {
     const sections = navLinks.map(l => document.querySelector(l.href))
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) setActive('#' + entry.target.id)
-        })
-      },
+      (entries) => { entries.forEach(e => { if (e.isIntersecting) setActive('#' + e.target.id) }) },
       { threshold: 0.4 }
     )
     sections.forEach(s => s && observer.observe(s))
     return () => observer.disconnect()
-  }, [])
+  }, [lang])
 
   const handleNav = (href) => {
     setMobileOpen(false)
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth' })
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -48,8 +48,9 @@ export default function Navbar() {
         scrolled ? 'py-3 bg-void/80 backdrop-blur-xl border-b border-purple-600/10' : 'py-5 bg-transparent'
       }`}>
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+          {/* Logo */}
           <button onClick={() => handleNav('#hero')} className="flex items-center gap-2 group">
-            <div className="relative w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-600 group-hover:shadow-[0_0_16px_rgba(124,58,237,0.6)] transition-shadow duration-300">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br from-purple-600 to-blue-600 group-hover:shadow-[0_0_16px_rgba(124,58,237,0.6)] transition-shadow duration-300">
               <Cpu size={16} className="text-white" />
             </div>
             <span className="font-display font-bold text-sm tracking-wide text-slate-200 group-hover:text-white transition-colors">
@@ -57,6 +58,7 @@ export default function Navbar() {
             </span>
           </button>
 
+          {/* Desktop links */}
           <ul className="hidden lg:flex items-center gap-1">
             {navLinks.map(link => (
               <li key={link.href}>
@@ -66,24 +68,36 @@ export default function Navbar() {
                     active === link.href ? 'text-white' : 'text-slate-400 hover:text-slate-200'
                   }`}
                 >
-                  {active === link.href && (
-                    <span className="absolute inset-0 rounded-lg bg-purple-600/15 border border-purple-600/20" />
-                  )}
+                  {active === link.href && <span className="absolute inset-0 rounded-lg bg-purple-600/15 border border-purple-600/20" />}
                   <span className="relative">{link.label}</span>
                 </button>
               </li>
             ))}
           </ul>
 
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-purple-600/10 transition-all"
-          >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Language toggle */}
+            <button
+              onClick={toggle}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-600/25 bg-purple-600/8 text-purple-300 hover:text-white hover:border-purple-500/50 hover:bg-purple-600/15 transition-all text-xs font-mono font-medium"
+              title="Toggle language"
+            >
+              <Globe size={13} />
+              {lang === 'pt' ? 'EN' : 'PT'}
+            </button>
+
+            {/* Mobile menu */}
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-purple-600/10 transition-all"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
       </nav>
 
+      {/* Mobile drawer */}
       <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300 ${
         mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
       }`}>
@@ -92,14 +106,12 @@ export default function Navbar() {
           mobileOpen ? 'translate-x-0' : 'translate-x-full'
         }`}>
           <ul className="flex flex-col gap-2">
-            {navLinks.map((link, i) => (
+            {navLinks.map(link => (
               <li key={link.href}>
                 <button
                   onClick={() => handleNav(link.href)}
                   className={`w-full text-left px-4 py-3 rounded-xl font-display font-medium text-base transition-all duration-200 ${
-                    active === link.href
-                      ? 'text-white bg-purple-600/20 border border-purple-600/30'
-                      : 'text-slate-400 hover:text-white hover:bg-white/5'
+                    active === link.href ? 'text-white bg-purple-600/20 border border-purple-600/30' : 'text-slate-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {link.label}
